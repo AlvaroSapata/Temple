@@ -39,7 +39,8 @@ const eventSchema = new Schema({
 
   joinPeople: {
     type: [Schema.Types.ObjectId],
-    ref: "User"
+    ref: "User",
+    default: []
   },
 
   createdBy: {
