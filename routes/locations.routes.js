@@ -3,7 +3,7 @@ const router = require("express").Router();
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const Location = require("../models/Location.model");
 
-// Rutas CRUD de 
+// Rutas CRUD de
 
 // GET "/api/locations" => Envia al FE todas las Locations
 router.get("/", async (req, res, next) => {
@@ -19,7 +19,7 @@ router.get("/", async (req, res, next) => {
 // POST "/api/locations" => Recibe data del FE y crea una nueva Location en la DB
 router.post("/", isAuthenticated, async (req, res, next) => {
   try {
-    console.log(req.payload)
+    console.log(req.payload);
     // Destructuramos el req.body
     const { name, image, description, adress, createdBy } = req.body;
     const response = await Location.create({

@@ -7,6 +7,7 @@ router.get("/", (req, res, next) => {
 router.use("/auth", require("./auth.routes"));
 
 router.use("/djs", require("./djs.routes"));
+
 router.use("/events", require("./events.routes"));
 
 router.use("/locations", require("./locations.routes"));

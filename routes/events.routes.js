@@ -4,19 +4,18 @@ const isAuthenticated = require("../middlewares/isAuthenticated.js");
 const Event = require("../models/Event.model.js");
 
 //GET /api/events => enviar al front end la lista de todos los eventos
-
 router.get("/", async (req, res, next) => {
   try {
     const response = await Event.find();
-    res.json("prueba");
+    console.log(response);
+    res.json(`Lista Eventos encontrada ${response}`);
   } catch (err) {
     next(err);
   }
 });
 
 // POST /api/events => recibir del fronted los detalles de un todo y crearlo en la BD
-
-router.post("/",isAuthenticated, async (req, res, next) => {
+router.post("/", isAuthenticated, async (req, res, next) => {
   const {
     image,
     title,
@@ -30,18 +29,18 @@ router.post("/",isAuthenticated, async (req, res, next) => {
   } = req.body;
 
   try {
-    console.log(req.payload)
+    console.log(req.payload);
     console.log(req.body);
     console.log(req.params);
     await Event.create({
       title,
       date,
-      location,
+      location, // body ??
       gallery,
       afterMovie,
-      djs,
-      joinPeople,
-      createdBy: req.payload._id,
+      djs, // body ??
+      joinPeople, // []
+      createdBy: req.payload._id, // payload
       image,
     });
 
@@ -52,11 +51,10 @@ router.post("/",isAuthenticated, async (req, res, next) => {
 });
 
 //GET /api/events/:id => enviar al fronted los detalles de un evento
-
-router.get("/:eventsId", async (req, res, next) => {
-  const { eventsId } = req.params;
+router.get("/:eventId", async (req, res, next) => {
+  const { eventId } = req.params;
   try {
-    const response = await Event.findById(eventsId);
+    const response = await Event.findById(eventId);
     res.json(response);
   } catch (err) {
     next(err);
@@ -64,21 +62,19 @@ router.get("/:eventsId", async (req, res, next) => {
 });
 
 //DELETE /api/events/:events => eliminar un evento
-
-router.delete("/:eventsId", async (req, res, next) => {
-  const { eventsId } = req.params;
+router.delete("/:eventId", async (req, res, next) => {
+  const { eventId } = req.params;
   try {
-    await Event.findByIdAndDelete(eventsId);
+    await Event.findByIdAndDelete(eventId);
     res.json("documento eliminado");
   } catch (err) {
     next(err);
   }
 });
 
-//PUT /api/events/:eventsId => modificar un evento
-
-router.put("/:eventsId", async (req, res, next) => {
-  const { eventsId } = req.params;
+//PUT /api/events/:eventId => modificar un evento
+router.put("/:eventId", isAuthenticated, async (req, res, next) => {
+  const { eventId } = req.params;
   const {
     title,
     date,
@@ -91,7 +87,8 @@ router.put("/:eventsId", async (req, res, next) => {
     image,
   } = req.body;
   try {
-    await Event.findByIdAndUpdate(eventsId, {
+    console.log(req.payload);
+    await Event.findByIdAndUpdate(eventId, {
       title,
       date,
       location,
@@ -99,7 +96,7 @@ router.put("/:eventsId", async (req, res, next) => {
       afterMovie,
       djs,
       joinPeople,
-      createdBy,
+      createdBy: req.payload._id,
       image,
     });
     res.json("documento modificado");

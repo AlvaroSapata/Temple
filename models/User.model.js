@@ -5,28 +5,28 @@ const userSchema = new Schema(
   {
     username: {
       type: String,
-      required: [true, 'Nombre de usuario es requerido.']
+      required: [true, "Nombre de usuario es requerido."],
     },
     email: {
       type: String,
-      required: [true, 'Email es requerido.'],
+      required: [true, "Email es requerido."],
       unique: true,
       lowercase: true,
-      trim: true
+      trim: true,
     },
     password: {
       type: String,
-      required: [true, 'Contraseña es requerida.'],
+      required: [true, "Contraseña es requerida."],
     },
     role: {
       type: String,
-      enum: ['admin', 'user'],
-      default: 'user'
-    }
+      enum: ["admin", "user"],
+      default: "user",
+    },
   },
   {
-    // this second object adds extra properties: `createdAt` and `updatedAt`    
-    timestamps: true
+    // this second object adds extra properties: `createdAt` and `updatedAt`
+    timestamps: true,
   }
 );
 

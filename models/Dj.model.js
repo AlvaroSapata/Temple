@@ -1,7 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const djSchema = new Schema(
-{
+const djSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -9,16 +8,14 @@ const djSchema = new Schema(
 
   image: {
     type: String,
-    required: true
+    required: true,
   },
 
-
-    createdBy: {
-      type: Schema.Types.ObjectId,
-      ref: "User"
-    }
-}
-)
+  createdBy: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
+});
 
 const Dj = model("Dj", djSchema);
 

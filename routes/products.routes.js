@@ -39,34 +39,34 @@ router.post("/", isAuthenticated, async (req, res, next) => {
 
 // DELETE "/api/products/:productId" => Borra un producto por su ID
 router.delete("/:productId", async (req, res, next) => {
-    // Destructuramos el req.params
-    const { productId } = req.params;
-    try {
-      const response = await Product.findByIdAndDelete(productId);
-      res.json(`Producto borrado ${response}`);
-    } catch (error) {
-      next(error);
-    }
-  });
+  // Destructuramos el req.params
+  const { productId } = req.params;
+  try {
+    const response = await Product.findByIdAndDelete(productId);
+    res.json(`Producto borrado ${response}`);
+  } catch (error) {
+    next(error);
+  }
+});
 
-  // PUT "/api/products/:productId" => Actualiza un producto por su ID
-  router.put("/:productId", async (req, res, next) => {
-    // Destructuramos el req.params
-    const { productId } = req.params;
-    // Destructuramos el req.body
-    const { name, price, description, image, createdBy } = req.body;
-    try {
-      const response = await Product.findByIdAndUpdate(productId, {
-        name,
-        price,
-        description,
-        //! CLOUDINARY
-        image,
-      });
-      res.json(`Producto actualizado ${response}`);
-    } catch (error) {
-      next(error);
-    }
-  });
+// PUT "/api/products/:productId" => Actualiza un producto por su ID
+router.put("/:productId", async (req, res, next) => {
+  // Destructuramos el req.params
+  const { productId } = req.params;
+  // Destructuramos el req.body
+  const { name, price, description, image, createdBy } = req.body;
+  try {
+    const response = await Product.findByIdAndUpdate(productId, {
+      name,
+      price,
+      description,
+      //! CLOUDINARY
+      image,
+    });
+    res.json(`Producto actualizado ${response}`);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;

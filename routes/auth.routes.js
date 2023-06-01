@@ -108,7 +108,7 @@ router.post("/login", async (req, res) => {
 });
 
 // GET "/api/auth/verify" => Verifica quien es el usuario logueado
-router.get("/verify",isAuthenticated, (req, res, next) => {
+router.get("/verify", isAuthenticated, (req, res, next) => {
   // 1. Recibir y validar el token a traves del middleware
   // 2. Extraer el payload para indicar quien es el usuario de ese token
 
