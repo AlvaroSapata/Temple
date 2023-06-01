@@ -11,7 +11,7 @@ router.get("/", async (req, res, next) => {
   try {
     const response = await Product.find();
     console.log(response);
-    res.json(`Lista Products encontrada ${response}`);
+    res.json(response);
   } catch (error) {
     next(error);
   }
@@ -31,7 +31,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
       createdBy: req.payload._id,
     });
     console.log(response);
-    res.json(`Product creado ${response}`);
+    res.json(response);
   } catch (error) {
     next(error);
   }
@@ -43,7 +43,7 @@ router.delete("/:productId", async (req, res, next) => {
   const { productId } = req.params;
   try {
     const response = await Product.findByIdAndDelete(productId);
-    res.json(`Producto borrado ${response}`);
+    res.json(response);
   } catch (error) {
     next(error);
   }
@@ -63,7 +63,7 @@ router.put("/:productId", async (req, res, next) => {
       //! CLOUDINARY
       image,
     });
-    res.json(`Producto actualizado ${response}`);
+    res.json(response);
   } catch (error) {
     next(error);
   }

@@ -10,7 +10,7 @@ router.get("/", async (req, res, next) => {
   try {
     const response = await Location.find();
     console.log(response);
-    res.json(`Lista Locations encontrada ${response}`);
+    res.json(response);
   } catch (error) {
     next(error);
   }
@@ -30,7 +30,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
       createdBy: req.payload._id,
     });
     console.log(response);
-    res.json(`Location creada ${response}`);
+    res.json(response);
   } catch (error) {
     next(error);
   }
@@ -43,7 +43,7 @@ router.get("/:locationId", async (req, res, next) => {
   try {
     const response = await Location.findById(locationId);
     console.log(response);
-    res.json(`Location encontrada ${response}`);
+    res.json(response);
   } catch (error) {
     next(error);
   }
@@ -55,7 +55,7 @@ router.delete("/:locationId", async (req, res, next) => {
   const { locationId } = req.params;
   try {
     const response = await Location.findByIdAndDelete(locationId);
-    res.json(`Location borrada ${response}`);
+    res.json(response);
   } catch (error) {
     next(error);
   }
@@ -75,7 +75,7 @@ router.put("/:locationId", async (req, res, next) => {
       adress,
     });
     console.log(response);
-    res.json(`Location editada ${response}`);
+    res.json(response);
   } catch (error) {
     next(error);
   }

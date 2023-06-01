@@ -11,7 +11,7 @@ router.get("/", async (req, res, next) => {
   try {
     const response = await Dj.find();
     console.log(response);
-    res.json(`Lista Djs encontrada ${response}`);
+    res.json(response);
   } catch (error) {
     next(error);
   }
@@ -29,7 +29,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
       createdBy: req.payload._id,
     });
     console.log(response);
-    res.json(`Dj creado ${response}`);
+    res.json(response);
   } catch (error) {
     next(error);
   }
@@ -41,7 +41,7 @@ router.delete("/:djId", async (req, res, next) => {
   const { djId } = req.params;
   try {
     const response = await Dj.findByIdAndDelete(djId);
-    res.json(`Dj borrado ${response}`);
+    res.json(response);
   } catch (error) {
     next(error);
   }

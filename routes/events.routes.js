@@ -8,7 +8,7 @@ router.get("/", async (req, res, next) => {
   try {
     const response = await Event.find();
     console.log(response);
-    res.json(`Lista Eventos encontrada ${response}`);
+    res.json(response);
   } catch (err) {
     next(err);
   }
