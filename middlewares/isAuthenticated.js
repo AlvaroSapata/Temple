@@ -8,12 +8,13 @@ const isAuthenticated = jwt({
 
   getToken: (req) => {
     console.log(req.headers);
+    
 
-    if (!req.headers || !req.headers.Authorization) {
+    if (!req.headers || !req.headers.authorization) {
       console.log("no hay token");
       return null;
     }
-    const tokenArr = req.headers.Authorization.split(" ");
+    const tokenArr = req.headers.authorization.split(" ");
     const tokenType = tokenArr[0];
     const token = tokenArr[1];
 
