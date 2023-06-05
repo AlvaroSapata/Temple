@@ -6,7 +6,9 @@ const Event = require("../models/Event.model.js");
 //GET /api/events => enviar al front end la lista de todos los eventos
 router.get("/", async (req, res, next) => {
   try {
-    const response = await Event.find();
+    const response = await Event.find()
+    .populate("location")
+    .populate("djs")
     console.log(response);
     res.json(response);
   } catch (err) {
