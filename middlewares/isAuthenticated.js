@@ -25,6 +25,10 @@ const isAuthenticated = jwt({
     console.log("Token valido");
     return token;
   },
+
+  
 });
+
+  
 
 module.exports = isAuthenticated;
