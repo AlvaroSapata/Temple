@@ -117,4 +117,50 @@ router.put(
   }
 );
 
+router.put(
+  "/:eventId/join",
+  isAuthenticated,
+
+  async (req, res, next) => {
+    const { eventId } = req.params;
+    const { joinPeople } = req.body;
+    try {
+      await Event.findByIdAndUpdate(
+        eventId,
+        {
+          $addToSet: { joinPeople: req.payload._id },
+        },
+        { new: true }
+      );
+
+      res.json("documento modificado");
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.put(
+  "/:eventId/unjoin",
+  isAuthenticated,
+
+  async (req, res, next) => {
+    const { eventId } = req.params;
+    const { joinPeople } = req.body;
+    try {
+      await Event.findByIdAndUpdate(
+        eventId,
+        {
+          $pull: { joinPeople: req.payload._id },
+        }
+        
+      );
+
+      res.json("documento modificado");
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 module.exports = router;
