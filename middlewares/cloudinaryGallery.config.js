@@ -12,11 +12,11 @@ cloudinary.config({
     cloudinary,
     params: {
       allowed_formats: ["jpg", "png"],
-      folder: "my-app", // El nombre de la carpeta donde se almacenarán las imágenes en Cloudinary
+      folder: "my-app", 
       resource_type: "raw",
     },
   });
   
-  const multipleImageUploader = multer({ storage }).array("images", 10); // Puedes ajustar el límite de imágenes permitidas (en este caso, 10)
+  const multipleImageUploader = multer({ storage }).array("images", 10); 
   
   module.exports = multipleImageUploader;
