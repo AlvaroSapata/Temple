@@ -8,7 +8,6 @@ const isAuthenticated = jwt({
 
   getToken: (req) => {
     console.log(req.headers);
-    
 
     if (!req.headers || !req.headers.authorization) {
       console.log("no hay token");
@@ -25,10 +24,6 @@ const isAuthenticated = jwt({
     console.log("Token valido");
     return token;
   },
-
-  
 });
 
-  
-
-module.exports = isAuthenticated;
+module.exports =  isAuthenticated 

@@ -1,6 +1,8 @@
 const router = require("express").Router();
 
 const isAuthenticated = require("../middlewares/isAuthenticated");
+const isAdminBack = require("../middlewares/isAdminBack");
+
 const Product = require("../models/Product.model");
 
 //! CLOUDINARY
@@ -18,7 +20,7 @@ router.get("/", async (req, res, next) => {
 });
 
 // POST "/api/products" => Recibe data del FE y crea un nuevo product en la DB
-router.post("/", isAuthenticated, async (req, res, next) => {
+router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
   try {
     // Destructuramos el req.body
     const { name, price, description, image, createdBy } = req.body;
@@ -38,7 +40,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
 });
 
 // DELETE "/api/products/:productId" => Borra un producto por su ID
-router.delete("/:productId", async (req, res, next) => {
+router.delete("/:productId", isAuthenticated,isAdminBack, async (req, res, next) => {
   // Destructuramos el req.params
   const { productId } = req.params;
   try {
@@ -50,7 +52,7 @@ router.delete("/:productId", async (req, res, next) => {
 });
 
 // PUT "/api/products/:productId" => Actualiza un producto por su ID
-router.put("/:productId", async (req, res, next) => {
+router.put("/:productId",isAuthenticated, isAdminBack, async (req, res, next) => {
   // Destructuramos el req.params
   const { productId } = req.params;
   // Destructuramos el req.body

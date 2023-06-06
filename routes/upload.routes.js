@@ -2,14 +2,15 @@
 
 const router = require("express").Router();
 
-const uploader = require("../middlewares/cloudinary.config.js");
+const imageUploader = require("../middlewares/cloudinaryImg.config");
+const videoUploader = require("../middlewares/cloudinary.config");
 
-// POST "/api/upload"
-router.post("/", uploader.single("image"), (req, res, next) => {
+// POST "/api/upload/image"
+router.post("/image", imageUploader.single("image"), (req, res, next) => {
   // console.log("file is: ", req.file);
 
   if (!req.file) {
-    next("No file uploaded!");
+    next("No image uploaded!");
     return;
   }
 
@@ -18,7 +19,9 @@ router.post("/", uploader.single("image"), (req, res, next) => {
 
   res.json({ imageUrl: req.file.path });
 });
-router.post("/", uploader.single("video"), (req, res, next) => {
+
+// POST "/api/upload/video"
+router.post("/video", videoUploader.single("video"), (req, res, next) => {
     // console.log("file is: ", req.file);
   
     if (!req.file) {

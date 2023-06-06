@@ -1,19 +1,10 @@
-function isAdminBack (req,res, next) {
-    
+function isAdminBack(req, res, next) {
+  const { payload } = req; 
+  if (payload.role === "admin") {
+    next();
+  } else {
+    res.status(401).json("No es admin");
+  }
+}
 
-
-    let isAdminRole = false
-  
-  
-  
-    const foundUser =  User.findOne({ role });
-    if (foundUser.role === "admin") { 
-      return isAdminRole(true);
-  }else {
-    return isAdminRole(false);
-    }
-
-    }
-
-
-    module.exports = isAdminBack
+module.exports = isAdminBack;

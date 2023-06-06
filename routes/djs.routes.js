@@ -1,6 +1,7 @@
 const router = require("express").Router();
 
 const isAuthenticated = require("../middlewares/isAuthenticated");
+const isAdminBack = require("../middlewares/isAdminBack");
 const Dj = require("../models/Dj.model");
 
 //! CLOUDINARY
@@ -18,7 +19,7 @@ router.get("/", async (req, res, next) => {
 });
 
 // POST "/api/djs" => Recibe data del FE y crea un nuevo Dj en la DB
-router.post("/", isAuthenticated, async (req, res, next) => {
+router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
   try {
     // Destructuramos el req.body
     const { name, image, createdBy } = req.body;
@@ -36,7 +37,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
 });
 
 // DELETE "/api/djs/:djId" => Borra un Dj por su ID
-router.delete("/:djId", async (req, res, next) => {
+router.delete("/:djId", isAdminBack, async (req, res, next) => {
   // Destructuramos el req.params
   const { djId } = req.params;
   try {

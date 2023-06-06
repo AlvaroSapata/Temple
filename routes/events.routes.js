@@ -1,14 +1,14 @@
 const router = require("express").Router();
 
 const isAuthenticated = require("../middlewares/isAuthenticated.js");
+const isAdminBack = require("../middlewares/isAdminBack");
+
 const Event = require("../models/Event.model.js");
 
 //GET /api/events => enviar al front end la lista de todos los eventos
 router.get("/", async (req, res, next) => {
   try {
-    const response = await Event.find()
-    .populate("location")
-    .populate("djs")
+    const response = await Event.find().populate("location").populate("djs");
     console.log(response);
     res.json(response);
   } catch (err) {
@@ -16,8 +16,8 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// POST /api/events => recibir del fronted los detalles de un todo y crearlo en la BD
-router.post("/", isAuthenticated, async (req, res, next) => {
+// POST /api/events => recibir del fronted los detalles de un Evento y crearlo en la BD
+router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
   const {
     image,
     title,
@@ -56,7 +56,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
 router.get("/:eventId", async (req, res, next) => {
   const { eventId } = req.params;
   try {
-    const response = await Event.findById(eventId);
+    const response = await Event.findById(eventId).populate("djs");
     res.json(response);
   } catch (err) {
     next(err);
@@ -64,33 +64,29 @@ router.get("/:eventId", async (req, res, next) => {
 });
 
 //DELETE /api/events/:events => eliminar un evento
-router.delete("/:eventId", async (req, res, next) => {
-  const { eventId } = req.params;
-  try {
-    await Event.findByIdAndDelete(eventId);
-    res.json("documento eliminado");
-  } catch (err) {
-    next(err);
+router.delete(
+  "/:eventId",
+  isAuthenticated,
+  isAdminBack,
+  async (req, res, next) => {
+    const { eventId } = req.params;
+    try {
+      await Event.findByIdAndDelete(eventId);
+      res.json("documento eliminado");
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 //PUT /api/events/:eventId => modificar un evento
-router.put("/:eventId", isAuthenticated, async (req, res, next) => {
-  const { eventId } = req.params;
-  const {
-    title,
-    date,
-    location,
-    gallery,
-    afterMovie,
-    djs,
-    joinPeople,
-    createdBy,
-    image,
-  } = req.body;
-  try {
-    console.log(req.payload);
-    await Event.findByIdAndUpdate(eventId, {
+router.put(
+  "/:eventId",
+  isAuthenticated,
+  isAdminBack,
+  async (req, res, next) => {
+    const { eventId } = req.params;
+    const {
       title,
       date,
       location,
@@ -98,13 +94,27 @@ router.put("/:eventId", isAuthenticated, async (req, res, next) => {
       afterMovie,
       djs,
       joinPeople,
-      createdBy: req.payload._id,
+      createdBy,
       image,
-    });
-    res.json("documento modificado");
-  } catch (error) {
-    next(error);
+    } = req.body;
+    try {
+      console.log(req.payload);
+      await Event.findByIdAndUpdate(eventId, {
+        title,
+        date,
+        location,
+        gallery,
+        afterMovie,
+        djs,
+        joinPeople,
+        createdBy: req.payload._id,
+        image,
+      });
+      res.json("documento modificado");
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 module.exports = router;

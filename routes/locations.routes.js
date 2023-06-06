@@ -1,6 +1,8 @@
 const router = require("express").Router();
 
 const isAuthenticated = require("../middlewares/isAuthenticated");
+const isAdminBack = require("../middlewares/isAdminBack");
+
 const Location = require("../models/Location.model");
 
 // Rutas CRUD de
@@ -17,7 +19,7 @@ router.get("/", async (req, res, next) => {
 });
 
 // POST "/api/locations" => Recibe data del FE y crea una nueva Location en la DB
-router.post("/", isAuthenticated, async (req, res, next) => {
+router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
   try {
     console.log(req.payload);
     // Destructuramos el req.body
@@ -50,35 +52,45 @@ router.get("/:locationId", async (req, res, next) => {
 });
 
 // DELETE "/api/locations/:locationId" => Borra una location por su ID
-router.delete("/:locationId", async (req, res, next) => {
-  // Destructuramos el req.params
-  const { locationId } = req.params;
-  try {
-    const response = await Location.findByIdAndDelete(locationId);
-    res.json(response);
-  } catch (error) {
-    next(error);
+router.delete(
+  "/:locationId",
+  isAuthenticated,
+  isAdminBack,
+  async (req, res, next) => {
+    // Destructuramos el req.params
+    const { locationId } = req.params;
+    try {
+      const response = await Location.findByIdAndDelete(locationId);
+      res.json(response);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // PUT "/api/locations/:locationId" => Edita una location por su ID
-router.put("/:locationId", async (req, res, next) => {
-  // Destructuramos el req.params y el req.body
-  const { locationId } = req.params;
-  // Destructuramos el req.body
-  const { name, image, description, adress, createdBy } = req.body;
-  try {
-    const response = await Location.findByIdAndUpdate(locationId, {
-      name,
-      image,
-      description,
-      adress,
-    });
-    console.log(response);
-    res.json(response);
-  } catch (error) {
-    next(error);
+router.put(
+  "/:locationId",
+  isAuthenticated,
+  isAdminBack,
+  async (req, res, next) => {
+    // Destructuramos el req.params y el req.body
+    const { locationId } = req.params;
+    // Destructuramos el req.body
+    const { name, image, description, adress, createdBy } = req.body;
+    try {
+      const response = await Location.findByIdAndUpdate(locationId, {
+        name,
+        image,
+        description,
+        adress,
+      });
+      console.log(response);
+      res.json(response);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 module.exports = router;
