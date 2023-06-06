@@ -16,4 +16,6 @@ router.use("/products", require("./products.routes"));
 
 router.use("/upload", require("./upload.routes"));
 
+/* router.use("/map", require("./map.routes")) */
+
 module.exports = router;
