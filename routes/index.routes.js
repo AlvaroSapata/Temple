@@ -16,4 +16,6 @@ router.use("/products", require("./products.routes"));
 
 router.use("/upload", require("./upload.routes"));
 
+router.use("/isAdmin", require("./isAdmin.routes"));
+
 module.exports = router;

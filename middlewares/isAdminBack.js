@@ -1,4 +1,7 @@
-function isAdmin (req,res, next) {
+function isAdminBack (req,res, next) {
+    
+
+
     let isAdminRole = false
   
   
@@ -9,7 +12,8 @@ function isAdmin (req,res, next) {
   }else {
     return isAdminRole(false);
     }
+
     }
 
 
-    module.exports = isAdmin
+    module.exports = isAdminBack
