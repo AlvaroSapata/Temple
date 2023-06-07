@@ -16,4 +16,7 @@ router.use("/products", require("./products.routes"));
 
 router.use("/upload", require("./upload.routes"));
 
+const paymentRoutes = require("./payment.routes")
+router.use("/payment", paymentRoutes)
+
 module.exports = router;
