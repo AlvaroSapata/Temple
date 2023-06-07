@@ -23,12 +23,13 @@ router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
   try {
     console.log(req.payload);
     // Destructuramos el req.body
-    const { name, image, description, adress, createdBy } = req.body;
+    console.log("REQBODYYYYYYYYYYYYYYYYYYYYYYYY",req.body)
+    const { name, image, description, address } = req.body;
     const response = await Location.create({
       name,
       image,
       description,
-      adress,
+      address,
       createdBy: req.payload._id,
     });
     console.log(response);
@@ -77,13 +78,13 @@ router.put(
     // Destructuramos el req.params y el req.body
     const { locationId } = req.params;
     // Destructuramos el req.body
-    const { name, image, description, adress, createdBy } = req.body;
+    const { name, image, description, address, createdBy } = req.body;
     try {
       const response = await Location.findByIdAndUpdate(locationId, {
         name,
         image,
         description,
-        adress,
+        address,
       });
       console.log(response);
       res.json(response);

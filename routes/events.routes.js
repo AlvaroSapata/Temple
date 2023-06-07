@@ -56,7 +56,7 @@ router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
 router.get("/:eventId", async (req, res, next) => {
   const { eventId } = req.params;
   try {
-    const response = await Event.findById(eventId).populate("djs");
+    const response = await Event.findById(eventId).populate("location").populate("djs");
     res.json(response);
   } catch (err) {
     next(err);
@@ -94,7 +94,6 @@ router.put(
       afterMovie,
       djs,
       joinPeople,
-      createdBy,
       image,
     } = req.body;
     try {
