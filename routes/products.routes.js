@@ -23,7 +23,12 @@ router.get("/", async (req, res, next) => {
 router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
   try {
     // Destructuramos el req.body
-    const { name, price, description, image, createdBy } = req.body;
+    const { name, price, description, image } = req.body;
+
+    if (!name || !price || !description || !image) {
+      res.status(400).json({ message: "Debes rellenar todos los campos" });
+      return;
+    }
     const response = await Product.create({
       name,
       price,
@@ -40,35 +45,45 @@ router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
 });
 
 // DELETE "/api/products/:productId" => Borra un producto por su ID
-router.delete("/:productId", isAuthenticated,isAdminBack, async (req, res, next) => {
-  // Destructuramos el req.params
-  const { productId } = req.params;
-  try {
-    const response = await Product.findByIdAndDelete(productId);
-    res.json(response);
-  } catch (error) {
-    next(error);
+router.delete(
+  "/:productId",
+  isAuthenticated,
+  isAdminBack,
+  async (req, res, next) => {
+    // Destructuramos el req.params
+    const { productId } = req.params;
+    try {
+      const response = await Product.findByIdAndDelete(productId);
+      res.json(response);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // PUT "/api/products/:productId" => Actualiza un producto por su ID
-router.put("/:productId",isAuthenticated, isAdminBack, async (req, res, next) => {
-  // Destructuramos el req.params
-  const { productId } = req.params;
-  // Destructuramos el req.body
-  const { name, price, description, image, createdBy } = req.body;
-  try {
-    const response = await Product.findByIdAndUpdate(productId, {
-      name,
-      price,
-      description,
-      //! CLOUDINARY
-      image,
-    });
-    res.json(response);
-  } catch (error) {
-    next(error);
+router.put(
+  "/:productId",
+  isAuthenticated,
+  isAdminBack,
+  async (req, res, next) => {
+    // Destructuramos el req.params
+    const { productId } = req.params;
+    // Destructuramos el req.body
+    const { name, price, description, image, createdBy } = req.body;
+    try {
+      const response = await Product.findByIdAndUpdate(productId, {
+        name,
+        price,
+        description,
+        //! CLOUDINARY
+        image,
+      });
+      res.json(response);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 module.exports = router;

@@ -23,8 +23,11 @@ router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
   try {
     console.log(req.payload);
     // Destructuramos el req.body
-    console.log("REQBODYYYYYYYYYYYYYYYYYYYYYYYY",req.body)
     const { name, image, description, address } = req.body;
+    if (!name || !address || !description || !image) {
+      res.status(400).json({ message: "Debes rellenar todos los campos" });
+      return;
+    }
     const response = await Location.create({
       name,
       image,
@@ -35,6 +38,10 @@ router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
     console.log(response);
     res.json(response);
   } catch (error) {
+    if (!name || !image || !description || !address) {
+      res.status(400).json({ message: "Debes rellenar todos los campos" });
+      return;
+    }
     next(error);
   }
 });

@@ -18,18 +18,12 @@ router.get("/", async (req, res, next) => {
 
 // POST /api/events => recibir del fronted los detalles de un Evento y crearlo en la BD
 router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
-  const {
-    image,
-    title,
-    date,
-    location,
-    gallery,
-    afterMovie,
-    djs,
-    joinPeople,
-    createdBy,
-  } = req.body;
-
+  const { image, title, date, location, gallery, afterMovie, djs, joinPeople } =
+    req.body;
+  if (!title || !date || !location || !image || !djs) {
+    res.status(400).json({ message: "Debes rellenar todos los campos" });
+    return;
+  }
   try {
     console.log(req.payload);
     console.log(req.body);
@@ -56,7 +50,9 @@ router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
 router.get("/:eventId", async (req, res, next) => {
   const { eventId } = req.params;
   try {
-    const response = await Event.findById(eventId).populate("location").populate("djs");
+    const response = await Event.findById(eventId)
+      .populate("location")
+      .populate("djs");
     res.json(response);
   } catch (err) {
     next(err);
@@ -147,13 +143,9 @@ router.put(
     const { eventId } = req.params;
     const { joinPeople } = req.body;
     try {
-      await Event.findByIdAndUpdate(
-        eventId,
-        {
-          $pull: { joinPeople: req.payload._id },
-        }
-        
-      );
+      await Event.findByIdAndUpdate(eventId, {
+        $pull: { joinPeople: req.payload._id },
+      });
 
       res.json("documento modificado");
     } catch (error) {

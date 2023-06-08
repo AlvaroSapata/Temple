@@ -20,9 +20,14 @@ router.get("/", async (req, res, next) => {
 
 // POST "/api/djs" => Recibe data del FE y crea un nuevo Dj en la DB
 router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
+  const {name,image} = req.body
+  if (!name || !image) {
+    res.status(400).json({ message: "Debes rellenar todos los campos" });
+    return;
+  }
   try {
     // Destructuramos el req.body
-    const { name, image, createdBy } = req.body;
+    const { name, image } = req.body;
     const response = await Dj.create({
       name,
       //! CLOUDINARY
@@ -37,7 +42,7 @@ router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
 });
 
 // DELETE "/api/djs/:djId" => Borra un Dj por su ID
-router.delete("/:djId", isAdminBack, async (req, res, next) => {
+router.delete("/:djId",isAuthenticated, isAdminBack, async (req, res, next) => {
   // Destructuramos el req.params
   const { djId } = req.params;
   try {
