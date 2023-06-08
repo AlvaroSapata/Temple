@@ -11,8 +11,8 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    allowed_formats: ["jpg", "png", "webm", "mp4"],
-    folder: "my-app", // The name of the folder where images will be stored in cloudinary
+    allowed_formats: ["webm", "mp4"],
+    folder: "my-app", 
     resource_type: 'video' 
   },
 });

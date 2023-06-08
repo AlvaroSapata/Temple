@@ -25,9 +25,6 @@ router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
     return;
   }
   try {
-    console.log(req.payload);
-    console.log(req.body);
-    console.log(req.params);
     await Event.create({
       title,
       date,
