@@ -5,14 +5,14 @@ const isAdminBack = require("../middlewares/isAdminBack");
 
 const Product = require("../models/Product.model");
 
-//! CLOUDINARY
+
 // Rutas CRUD de Products
 
 // GET "/api/products" => Envia al FE todas los productos
 router.get("/", async (req, res, next) => {
   try {
     const response = await Product.find();
-    console.log(response);
+    
     res.json(response);
   } catch (error) {
     next(error);
@@ -37,7 +37,7 @@ router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
       image,
       createdBy: req.payload._id,
     });
-    console.log(response);
+    
     res.json(response);
   } catch (error) {
     next(error);
@@ -76,7 +76,7 @@ router.put(
         name,
         price,
         description,
-        //! CLOUDINARY
+        
         image,
       });
       res.json(response);

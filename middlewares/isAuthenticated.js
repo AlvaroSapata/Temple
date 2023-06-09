@@ -7,10 +7,10 @@ const isAuthenticated = jwt({
   requestProperty: "payload",
 
   getToken: (req) => {
-    console.log(req.headers);
+   
 
     if (!req.headers || !req.headers.authorization) {
-      console.log("no hay token");
+      
       return null;
     }
     const tokenArr = req.headers.authorization.split(" ");
@@ -18,10 +18,10 @@ const isAuthenticated = jwt({
     const token = tokenArr[1];
 
     if (tokenType !== "Bearer") {
-      console.log("token de tipo incorrecto");
+      
       return null;
     }
-    console.log("Token valido");
+    
     return token;
   },
 });

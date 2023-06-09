@@ -9,7 +9,7 @@ const Event = require("../models/Event.model.js");
 router.get("/", async (req, res, next) => {
   try {
     const response = await Event.find().populate("location").populate("djs");
-    console.log(response);
+    
     res.json(response);
   } catch (err) {
     next(err);
@@ -18,7 +18,7 @@ router.get("/", async (req, res, next) => {
 
 // POST /api/events => recibir del fronted los detalles de un Evento y crearlo en la BD
 router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
-  const { image, title, date, location, gallery, afterMovie, djs, joinPeople } =
+  const { image, title, date, location, djs, joinPeople } =
     req.body;
   if (!title || !date || !location || !image || !djs) {
     res.status(400).json({ message: "Debes rellenar todos los campos" });
@@ -28,12 +28,11 @@ router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
     await Event.create({
       title,
       date,
-      location, // body ??
-      //gallery,
-      //afterMovie,
-      djs, // body ??
-      joinPeople, // []
-      createdBy: req.payload._id, // payload
+      location, 
+      
+      djs, 
+      joinPeople, 
+      createdBy: req.payload._id, 
       image,
     });
 

@@ -18,7 +18,7 @@ router.post("/signup", async (req, res, next) => {
     return;
   }
 
-  //! Alguna validacion mas ???
+  
 
   try {
     // Validar que el usuario no exista
@@ -41,7 +41,7 @@ router.post("/signup", async (req, res, next) => {
     // Encriptar la contraseña
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    console.log(hashedPassword);
+    
 
     // Crear el usuario
     await User.create({
@@ -103,7 +103,7 @@ router.post("/login", async (req, res) => {
       authToken,
     });
   } catch (error) {
-    // console.log(error);
+   
     next(error);
   }
 });
@@ -113,7 +113,7 @@ router.get("/verify", isAuthenticated, (req, res, next) => {
   // 1. Recibir y validar el token a traves del middleware
   // 2. Extraer el payload para indicar quien es el usuario de ese token
 
-  console.log("Usuario activo", req.payload);
+  
 
   res.json({ payload: req.payload });
 });

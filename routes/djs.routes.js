@@ -34,7 +34,7 @@ router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
       image,
       createdBy: req.payload._id,
     });
-    console.log(response);
+    
     res.json(response);
   } catch (error) {
     next(error);

@@ -11,7 +11,7 @@ const Location = require("../models/Location.model");
 router.get("/", async (req, res, next) => {
   try {
     const response = await Location.find();
-    console.log(response);
+    
     res.json(response);
   } catch (error) {
     next(error);
@@ -21,7 +21,7 @@ router.get("/", async (req, res, next) => {
 // POST "/api/locations" => Recibe data del FE y crea una nueva Location en la DB
 router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
   try {
-    console.log(req.payload);
+   
     // Destructuramos el req.body
     const { name, image, description, address } = req.body;
     if (!name || !address || !description || !image) {
@@ -35,7 +35,7 @@ router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
       address,
       createdBy: req.payload._id,
     });
-    console.log(response);
+    
     res.json(response);
   } catch (error) {
     if (!name || !image || !description || !address) {
@@ -52,7 +52,7 @@ router.get("/:locationId", async (req, res, next) => {
   const { locationId } = req.params;
   try {
     const response = await Location.findById(locationId);
-    console.log(response);
+    
     res.json(response);
   } catch (error) {
     next(error);
@@ -93,7 +93,7 @@ router.put(
         description,
         address,
       });
-      console.log(response);
+      
       res.json(response);
     } catch (error) {
       next(error);

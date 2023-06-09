@@ -1,4 +1,4 @@
-// in "models/Payment.model.js"
+
 
 const mongoose = require("mongoose");
 
@@ -15,10 +15,7 @@ const paymentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product"
   },
-  // buyer: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "User"
-  // },
+  
 });
 
 const Payment = mongoose.model("Payment", paymentSchema);
