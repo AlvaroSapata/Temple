@@ -24,13 +24,13 @@ const eventSchema = new Schema({
 
   gallery:{
     type: [String],
-    default: []
+    //default: []
     
   },
 
   afterMovie: {
     type: String,
-    default: "Proximamente..."
+    //default: "Proximamente..."
     
   },
 

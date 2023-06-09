@@ -29,8 +29,8 @@ router.post("/", isAuthenticated, isAdminBack, async (req, res, next) => {
       title,
       date,
       location, // body ??
-      gallery,
-      afterMovie,
+      //gallery,
+      //afterMovie,
       djs, // body ??
       joinPeople, // []
       createdBy: req.payload._id, // payload
